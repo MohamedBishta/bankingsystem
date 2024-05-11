@@ -7,27 +7,20 @@ import 'package:untitled3/BankingSystem/SavingsBankAccount.dart';
 class BankingSystem{
   List<BankAccount> allAccounts = [];
   List<Client> allClients = [];
-
-  BankingSystem(){
-    addTestData();
-  }
+  factory BankingSystem() => _instance;
+  BankingSystem._();
+  static BankingSystem _instance = BankingSystem._();
   void showAllAccounts() {
+    if(allAccounts.isEmpty){
+      print('There is no accounts added '
+          'please adds account');
+      return;
+    }
     for(int i=0;i<allAccounts.length;i++){
       print("--------------------------------");
       allAccounts[i].viewDetails();
+      print("--------------------------------");
     }
-  }
-
-  addTestData(){
-    for(int i=0;i<20;i++){
-      BankAccount account = BankAccount(i*1000);
-      Client client = Client("Client num $i", "zinarah", 1234);
-      client.account = account;
-      account.owner = client;
-      allAccounts.add(account);
-      allClients.add(client);
-    }
-
   }
   BankAccount? getAccountById(accountId){
     for(int i=0; i<allAccounts.length;i++){
@@ -134,6 +127,7 @@ class BankingSystem{
         }
         print('--------------------------------');
         account.viewDetails();
+        print('--------------------------------');
       }else if(option == 4){
         deleteAccount();
       }else if(option == 5){
